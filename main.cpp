@@ -1,58 +1,41 @@
 #include <iostream>
-#include <fstream>
 #include <cstdlib>
 using namespace std;
-#include "Spel.h"
+#include "Puzzel.h"
 #include "Stapel.h"
-
 void hoofdMenu( );
 
-int main( ) {
+int main( ){
     hoofdMenu( );
     return 0;
 }//main
 
 void hoofdMenu( ){
     char keuze;
-    srand(time(0));
-    Stapel s;
-    Spel puzzel;
-    puzzel.drukAf( );
+    Stapel stapel;
+    Puzzel puzzel;
+    int n;
     cout << endl;
     do {
-        cout    << "(P)arameters, Optie(1), Optie(2), (S)toppen.\n"
-                << "(B)este, (G)retig, of (R)andom zet.\n"
-                << "(T)erug voor vorige zet.\n" << endl;
+        cout    << "Kies uit (G)ewoon, (H)orizontaal-variant en\n"
+                << "(R)otatie-variant. P voor Parameters, S voor stoppen.\n" 
+                << endl;
         keuze = cin.get( );
         switch (keuze){
-            case 'p': case 'P':
-                    puzzel.parameters( );
-                    break;
-            case '1':
-                if (puzzel.optie1(puzzel,s))
-                    cout << "Het spel is winnend voor A.\n" << endl;
-                else
-                    cout << "Het spel is winnend voor B.\n" << endl;
+            case 'G': case 'g':
                 cin.ignore(100, '\n');
+                cout    << "Het aantal mogelijkheden is: "  
+                        << puzzel.gewoon(puzzel,stapel) << endl;
                 break;
-            case '2':
-                puzzel.result2(puzzel,s);
+            case 'H': case 'h':
+                puzzel.selectN(puzzel,stapel);
+                break;
+            case 'R': case 'r':
                 cin.ignore(100, '\n');
+                puzzel.rotatieTest(puzzel,stapel);
                 break;
-            case 'b': case 'B':
-                puzzel.zetBeste(puzzel,s);
-                cin.ignore(100, '\n');
-                break;
-            case 'g': case 'G':
-                puzzel.zetGretig(s);
-                break;
-            case 'r': case 'R':
-                puzzel.zetRandom(s);
-                break;
-            case 't': case 'T':
-                s.pop(puzzel);
-                cin.ignore(100, '\n');
-                puzzel.drukAf( );
+            case 'P': case 'p':
+                puzzel.parameters( );
                 break;
             case 's': case 'S':
                 break;
